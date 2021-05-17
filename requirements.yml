@@ -1,0 +1,4 @@
+
+- name: lxc-sandbox
+  src: https://github.com/gpenaud/ansible-role-lxc-sandbox
+  version: master
