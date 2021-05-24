@@ -1,6 +1,0 @@
-[supervision]
-prometheus
-grafana
-traefik
-consul
-authelia

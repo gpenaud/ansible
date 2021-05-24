@@ -1,0 +1,33 @@
+all:
+  children:
+
+    # --------------------- #
+    # needys infrastructure #
+    # --------------------- #
+
+    # groups of hosts
+    needys-api-need:
+      hosts:
+        apis.needys.lxc:
+
+    needys-output-producer:
+      hosts:
+        apis.needys.lxc:
+
+    needys-services:
+      hosts:
+        services.needys.lxc
+
+    # groups of group
+    needys-application:
+      children:
+        needys-api-need:
+        needys-output-producer:
+
+    needys:
+      children:
+        needys-application:
+        needys-services:
+      vars:
+        ansible_user: root
+        lxc_sandbox_interface_bridge: needys-lxc

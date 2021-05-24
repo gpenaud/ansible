@@ -1,4 +1,18 @@
+---
 
-- name: lxc-sandbox
-  src: https://github.com/gpenaud/ansible-role-lxc-sandbox
-  version: master
+roles:
+  - name: lxc-sandbox
+    src: https://github.com/gpenaud/ansible-role-lxc-sandbox
+    version: master
+
+  - name: mrlesmithjr.rabbitmq
+
+  - name: geerlingguy.mysql
+
+  - name: needys-api-need
+    src: https://github.com/gpenaud/ansible-role-needys-api-need
+    version: master
+
+  - name: needys-output-producer
+    src: https://github.com/gpenaud/ansible-role-needys-output-producer
+    version: master

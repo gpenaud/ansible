@@ -1,0 +1,13 @@
+- name: generate lxc infrastructure
+  hosts: needys
+  gather_facts: no
+  roles:
+  - role: lxc-infrastructure
+    when: create_infrastructure is defined and create_infrastructure == "yes"
+
+- name: install needys micro-services
+  hosts: needys-application
+  gather_facts: no
+  roles:
+  - needys-api-need
+  - needys-output-producer
