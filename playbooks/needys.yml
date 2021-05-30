@@ -5,9 +5,37 @@
   - role: lxc-infrastructure
     when: create_infrastructure is defined and create_infrastructure == "yes"
 
+- name: install needys sidecar services
+  hosts: needys-services
+  gather_facts: yes
+  roles:
+  - role: rabbitmq
+    tags: [services, rabbitmq]
+  - role: geerlingguy.mysql
+    tags: [services, mysql]
+  pre_tasks:
+  - name: install gnupg for rabbitmq role
+    package:
+      name: gnupg
+    tags: [services, rabbitmq]
+  tasks:
+  - name: copy bootstrap.sql to remote host
+    copy:
+      src: needys_files/bootstrap.sql
+      dest: /tmp
+    register: copied_bootstrap
+  - name: inject mysql test data in mysql sidecar service
+    mysql_db:
+      name: needys
+      state: import
+      target: /tmp/bootstrap.sql
+    when: copied_bootstrap.changed
+
 - name: install needys micro-services
   hosts: needys-application
   gather_facts: no
   roles:
-  - needys-api-need
-  - needys-output-producer
+  - role: needys-api-need
+    tags: [needys, needys-api-need]
+  - role: needys-output-producer
+    tags: [needys, needys-output-producer]

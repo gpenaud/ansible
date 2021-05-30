@@ -1,11 +1,16 @@
 ---
 
+collections:
+  - name: community.general
+
 roles:
   - name: lxc-sandbox
     src: https://github.com/gpenaud/ansible-role-lxc-sandbox
     version: master
 
-  - name: mrlesmithjr.rabbitmq
+  - name: rabbitmq
+    src: https://github.com/stone-payments/ansible-rabbitmq
+    version: master
 
   - name: geerlingguy.mysql
 

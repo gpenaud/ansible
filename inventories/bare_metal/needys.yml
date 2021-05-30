@@ -9,14 +9,47 @@ all:
     needys-api-need:
       hosts:
         apis.needys.lxc:
+      vars:
+        needys_api_need_binary_options:
+        - --server.host 0.0.0.0
+        - --server.port 8010
+        - --rabbitmq.host services.needys.lxc
+        - --rabbitmq.port 5672
+        - --rabbitmq.username needys
+        - --rabbitmq.password needys
+        - --mysql.host services.needys.lxc
+        - --mysql.port 3306
 
     needys-output-producer:
       hosts:
         apis.needys.lxc:
+      vars:
+        needys_output_producer_binary_options:
+        - --rabbitmq.host services.needys.lxc
+        - --rabbitmq.port 5672
+        - --rabbitmq.username needys
+        - --rabbitmq.password needys
 
     needys-services:
       hosts:
-        services.needys.lxc
+        services.needys.lxc:
+      vars:
+        # mysql vars
+        mysql_root_password: needysroot
+        mysql_databases:
+        - name: needys
+          encoding: utf8mb4
+          collation: utf8mb4_unicode_ci
+        mysql_users:
+        - name: needys
+          host: "%"
+          password: needys
+          priv: "needys.*:ALL"
+        # rabbitmq vars
+        rabbitmq_users:
+          needys:
+            password: needys
+            tags: administrator
 
     # groups of group
     needys-application:
@@ -30,4 +63,4 @@ all:
         needys-services:
       vars:
         ansible_user: root
-        lxc_sandbox_interface_bridge: needys-lxc
+        lxc_infrastructure_interface_bridge: needys-lxc
