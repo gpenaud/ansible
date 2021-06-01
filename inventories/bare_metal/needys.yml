@@ -50,6 +50,58 @@ all:
           needys:
             password: needys
             tags: administrator
+        # prometheus vars
+        prometheus_web_listen_address: 0.0.0.0:9090
+        prometheus_scrape_configs:
+        - job_name: node
+          file_sd_configs:
+          - files:
+            - "{{ prometheus_config_dir }}/file_sd/node.yml"
+        - job_name: rabbitmq
+          file_sd_configs:
+          - files:
+            - "{{ prometheus_config_dir }}/file_sd/rabbitmq.yml"
+        - job_name: mysqld
+          file_sd_configs:
+          - files:
+            - "{{ prometheus_config_dir }}/file_sd/mysqld.yml"
+        prometheus_targets:
+          node:
+          - targets:
+            - apis.needys.lxc:9100
+            - services.needys.lxc:9100
+            labels:
+              env: production
+          rabbitmq:
+          - targets:
+            - services.needys.lxc:9101
+            labels:
+              env: production
+          mysqld:
+          - targets:
+            - services.needys.lxc:9102
+            labels:
+              env: production
+        # prometheus-rabbitmq-exporter vars
+        prometheus_rabbitmq_exporter_config_flags:
+          rabbit_url: http://services.needys.lxc:15672
+          rabbit_user: needys
+          rabbit_password: needys
+          publish_port: 9101
+        # prometheus-mysqld-exporter vars
+        mysqld_exporter_web_listen_address: 0.0.0.0:9102
+        mysqld_exporter_dsn: needys:needys@(services.needys.lxc:3306)/
+        # grafana vars
+        grafana_url: http://services.needys.lxc:3000
+        grafana_security:
+          admin_user: needys
+          admin_password: needys
+        grafana_datasources:
+        - name: prometheus
+          type: prometheus
+          access: proxy
+          url: "http://{{ prometheus_web_listen_address }}"
+          basicAuth: false
 
     # groups of group
     needys-application:

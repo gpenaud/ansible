@@ -1,23 +1,46 @@
 ---
-
-collections:
-  - name: community.general
-
 roles:
-  - name: lxc-sandbox
-    src: https://github.com/gpenaud/ansible-role-lxc-sandbox
-    version: master
+- name: lxc-sandbox
+  src: https://github.com/gpenaud/ansible-role-lxc-sandbox
+  version: master
 
-  - name: rabbitmq
-    src: https://github.com/stone-payments/ansible-rabbitmq
-    version: master
+- name: rabbitmq
+  src: https://github.com/stone-payments/ansible-rabbitmq
+  version: master
 
-  - name: geerlingguy.mysql
+- name: mysql
+  src: https://github.com/geerlingguy/ansible-role-mysql
+  version: master
 
-  - name: needys-api-need
-    src: https://github.com/gpenaud/ansible-role-needys-api-need
-    version: master
+- name: grafana
+  src: https://github.com/cloudalchemy/ansible-grafana
+  version: master
 
-  - name: needys-output-producer
-    src: https://github.com/gpenaud/ansible-role-needys-output-producer
-    version: master
+- name: prometheus
+  src: https://github.com/cloudalchemy/ansible-prometheus
+  version: master
+
+- name: prometheus-node-exporter
+  src: https://github.com/cloudalchemy/ansible-node-exporter
+  version: master
+
+- name: prometheus-rabbitmq-exporter
+  src: https://github.com/nwalke/ansible-prometheus-rabbitmq-exporter
+  version: master
+
+- name: prometheus-mysqld-exporter
+  src: https://github.com/cloudalchemy/ansible-mysqld_exporter
+  version: master
+
+- name: needys-api-need
+  src: https://github.com/gpenaud/ansible-role-needys-api-need
+  version: master
+
+- name: needys-output-producer
+  src: https://github.com/gpenaud/ansible-role-needys-output-producer
+  version: master
+
+# FIX broken dependecy
+- name: UnderGreen.prometheus-exporters-common
+  src: https://github.com/UnderGreen/ansible-prometheus-exporters-common
+  version: master

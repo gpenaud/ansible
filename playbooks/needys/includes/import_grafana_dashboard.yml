@@ -1,0 +1,22 @@
+---
+- block:
+
+  - name: copy grafana dashboard to remote host
+    copy:
+      src: "files/grafana_dashboards/{{ dashboard | basename }}"
+      dest: /tmp
+    register: copied_dashboard
+
+  - name: import dashboard into grafana server
+    grafana_dashboard:
+      grafana_url: "{{ grafana_url }}"
+      url_username: "{{ grafana_security.admin_user }}"
+      url_password: "{{ grafana_security.admin_user }}"
+      state: present
+      path: "/tmp/{{ dashboard | basename }}"
+      commit_message: Updated by ansible
+      overwrite: yes
+
+    when: copied_dashboard.changed
+
+  tags: [supervision, grafana, grafana-dashboard]
