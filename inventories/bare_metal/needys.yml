@@ -102,6 +102,38 @@ all:
           access: proxy
           url: "http://{{ prometheus_web_listen_address }}"
           basicAuth: false
+        # elasticsearch vars
+        es_data_dirs:
+          - /opt/elasticsearch/data
+        es_log_dir: /opt/elasticsearch/logs
+        es_config:
+          node.name: needus_node_1
+          cluster.name: needys-cluster
+          discovery.seed_hosts: services.needys.lxc:9301
+          http.host: 0.0.0.0
+          http.port: 9201
+          transport.port: 9301
+          node.data: false
+          node.master: true
+          bootstrap.memory_lock: true
+        es_heap_size: 256m
+        es_api_port: 9201
+        # kibana vars
+        kibana_server_port: 5601
+        kibana_server_host: "0.0.0.0"
+        kibana_elasticsearch_url: "http://services.needys.lxc:9201"
+        kibana_elasticsearch_username: ""
+        kibana_elasticsearch_password: ""
+        # fluentd vars
+        fluentd_conf_matches: |
+          <match apache.**>
+            @type elasticsearch
+            host services.needys.lxc
+            port 9201
+            # user myuser
+            # password mypassword
+            logstash_format true
+          </match>
 
     # groups of group
     needys-application:

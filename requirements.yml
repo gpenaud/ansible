@@ -4,6 +4,10 @@ roles:
   src: https://github.com/gpenaud/ansible-role-lxc-sandbox
   version: master
 
+- name: envoy
+  src: https://github.com/fabiocruzcoelho/ansible-role-envoyproxy
+  version: master
+
 - name: rabbitmq
   src: https://github.com/stone-payments/ansible-rabbitmq
   version: master
@@ -30,6 +34,18 @@ roles:
 
 - name: prometheus-mysqld-exporter
   src: https://github.com/cloudalchemy/ansible-mysqld_exporter
+  version: master
+
+- name: elasticsearch
+  src: https://github.com/elastic/ansible-elasticsearch
+  version: master
+
+- name: fluentd
+  src: https://github.com/geerlingguy/ansible-role-fluentd
+  version: master
+
+- name: kibana
+  src: https://github.com/geerlingguy/ansible-role-kibana
   version: master
 
 - name: needys-api-need

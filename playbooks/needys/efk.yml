@@ -1,0 +1,24 @@
+
+# ------------------------------------------------------------------------
+# install Elasticsearch / Fluentd / Kibana stack
+# ------------------------------------------------------------------------
+- name: install elasticsearch for EFK
+  hosts: needys-services
+  gather_facts: yes
+  roles:
+  - role: elasticsearch
+    tags: [elasticsearch]
+
+- name: install fluentd for EFK
+  hosts: needys-services
+  gather_facts: yes
+  roles:
+  - role: fluentd
+    tags: [fluentd]
+
+- name: install kibana for EFK
+  hosts: needys-services
+  gather_facts: yes
+  roles:
+  - role: kibana
+    tags: [kibana]

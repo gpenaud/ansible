@@ -1,5 +1,10 @@
 
 # ------------------------------------------------------------------------
+# included vaulted variables (become password)
+# ------------------------------------------------------------------------
+
+
+# ------------------------------------------------------------------------
 # create a lxc infrastructure to deploy needys apis, sidecar services, and
 # supervision / logging tools
 # ------------------------------------------------------------------------
@@ -11,11 +16,21 @@
     when: create_infrastructure is defined and create_infrastructure == "yes"
     tags: [always]
 
-# -----------------------------------------------------------
-# install some services required by needys apis and services:
+# ------------------------------------------------------------------------
+# install envoy reverse-proxy
+# ------------------------------------------------------------------------
+- name: install envoy reverse-proxy
+  hosts: needys-services
+  gather_facts: yes
+  roles:
+  - role: envoy
+    tags: [envoy]
+
+# ------------------------------------------------------------------------
+# install some services required by needys apis and services
 # - mysql
 # - rabbitmq
-# -----------------------------------------------------------
+# ------------------------------------------------------------------------
 - name: install needys sidecar services
   hosts: needys-services
   gather_facts: yes
@@ -74,7 +89,6 @@
 # -----------------------------------------------------------
 # install grafana for monitoring purposes:
 # -----------------------------------------------------------
-
 - name: install grafana to monitor needys
   hosts: needys-services
   gather_facts: no

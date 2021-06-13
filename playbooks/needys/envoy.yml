@@ -1,0 +1,10 @@
+
+# ------------------------------------------------------------------------
+# install envoy reverse-proxy
+# ------------------------------------------------------------------------
+- name: install envoy reverse-proxy
+  hosts: needys-services
+  gather_facts: yes
+  roles:
+  - role: envoy
+    tags: [envoy]
